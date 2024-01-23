@@ -31,7 +31,7 @@
 /** \addtogroup cooking
 @{
 */
-
+#include <stdio.h>
 #include "foundation/PxVec3.h"
 #include "foundation/PxFlags.h"
 #include "common/PxCoreUtilityTypes.h"
