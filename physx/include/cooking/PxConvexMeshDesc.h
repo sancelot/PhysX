@@ -272,66 +272,109 @@ PX_INLINE bool PxConvexMeshDesc::isValid() const
 	// Check geometry
 	if(points.count < 3 ||	//at least 1 trig's worth of points
 		(points.count > 0xffff && flags & PxConvexFlag::e16_BIT_INDICES))
+	{
+		printf("%s %d\n",__FILE__,__LINE__);
 		return false;
+	}
 	if(!points.data)
+	{
+				printf("%s %d\n",__FILE__,__LINE__);
+
 		return false;
+	}
 	if(points.stride < sizeof(PxVec3))	//should be at least one point's worth of data
+	{
+				printf("%s %d\n",__FILE__,__LINE__);
+
 		return false;
+	}
 	if (quantizedCount < 4)
+	{		printf("%s %d\n",__FILE__,__LINE__);
+
 		return false;
+	}
 
 	// Check topology
 	if(polygons.data)
 	{
+		printf("%s %d\n",__FILE__,__LINE__);
 		if(polygons.count < 4) // we require 2 neighbors for each vertex - 4 polygons at least
+		{		printf("%s %d\n",__FILE__,__LINE__);
+
 			return false;
+		}
 
 		if(!indices.data) // indices must be provided together with polygons
+		{		printf("%s %d\n",__FILE__,__LINE__);
+
 			return false;
+		}
 
 		PxU32 limit = (flags & PxConvexFlag::e16_BIT_INDICES) ? sizeof(PxU16) : sizeof(PxU32);
 		if(indices.stride < limit) 
-			return false;
+		{
+					printf("%s %d\n",__FILE__,__LINE__);
+		return false;
+		}
 
 		limit = sizeof(PxHullPolygon);
 		if(polygons.stride < limit) 
+		{
+		printf("%s %d\n",__FILE__,__LINE__);
+
 			return false;
+		}
 	}
 	else
 	{
 		// We can compute the hull from the vertices
 		if(!(flags & PxConvexFlag::eCOMPUTE_CONVEX))
+		{		printf("%s %d\n",__FILE__,__LINE__);
+
 			return false;	// If the mesh is convex and we're not allowed to compute the hull,
 							// you have to provide it completely (geometry & topology).
+		}
 	}
 
 	if((flags & PxConvexFlag::ePLANE_SHIFTING) &&  vertexLimit < 4)
 	{
+				printf("%s %d\n",__FILE__,__LINE__);
+
 		return false;
 	}
 
 	if (!(flags & PxConvexFlag::ePLANE_SHIFTING) && vertexLimit < 8)
 	{
+		printf("%s %d\n",__FILE__,__LINE__);
+
 		return false;
 	}
 
 	if(vertexLimit > 255)
 	{
+		printf("%s %d\n",__FILE__,__LINE__);
+
 		return false;
 	}
 
 	if (polygonLimit < 4)
 	{
+		printf("%s %d\n",__FILE__,__LINE__);
+
 		return false;
 	}
 
 	if (polygonLimit > 255)
 	{
+		printf("%s %d\n",__FILE__,__LINE__);
+
 		return false;
 	}
 
 	if (sdfDesc && !sdfDesc->isValid())
 	{
+		printf("%s %d\n",__FILE__,__LINE__);
+
 		return false;
 	}
 
